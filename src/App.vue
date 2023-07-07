@@ -17,22 +17,31 @@
   })
 
   const guardarPaciente = () => {
-    pacientes.value.push({
-      ...paciente,
-      id:uid()
-    })
+    if(paciente.id){
+      const { id } = paciente
+      const i = pacientes.value.findIndex((pacientesState) => pacientesState.id === id )
+      pacientes.value[i] = {...paciente}
+    }else{
+      pacientes.value.push({
+        ...paciente,
+        id:uid()
+      })
+    }
+
 
     Object.assign(paciente, {
       nombre: '',
       propietario: '',
       email: '',
       alta: '',
-      sintomas: ''
+      sintomas: '',
+      id: null
     })
   }
 
   const actualizarPaciente = (id) => {
-
+    const pacienteEditar = pacientes.value.filter( paciente => paciente.id === id )[0]
+    Object.assign(paciente, pacienteEditar)
   }
 
 </script>
